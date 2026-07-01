@@ -83,6 +83,53 @@
 
   .search-hide{ display:none !important; }
 
+  /* ---------- TOC SIDEBAR ---------- */
+  .toc-sidebar{
+    position:fixed; right:18px; top:50%; transform:translateY(-50%);
+    z-index:80;
+    display:flex; flex-direction:column; gap:0;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:10px 6px;
+    box-shadow:0 8px 24px rgba(36,29,59,0.12);
+  }
+  .toc-sidebar ul{ list-style:none; display:flex; flex-direction:column; gap:2px; }
+  .toc-sidebar li{ position:relative; }
+  .toc-sidebar a{
+    display:flex; align-items:center; gap:10px;
+    padding:6px 10px; border-radius:8px;
+    text-decoration:none; color:var(--ink-dim);
+    font-family:var(--disp); font-size:12.5px; font-weight:600;
+    white-space:nowrap;
+  }
+  .toc-dot{
+    width:9px; height:9px; min-width:9px; border-radius:50%;
+    background:var(--line); border:1.5px solid var(--line);
+    transition:background .15s ease, border-color .15s ease;
+    display:flex; align-items:center; justify-content:center;
+    font-size:8px; color:transparent;
+  }
+  .toc-label{
+    max-width:0; overflow:hidden; opacity:0;
+    transition:max-width .2s ease, opacity .2s ease;
+  }
+  .toc-sidebar:hover .toc-label{ max-width:160px; opacity:1; }
+  .toc-sidebar li.visited .toc-dot{
+    background:var(--teal); border-color:var(--teal); color:#fff; font-size:7px;
+  }
+  .toc-sidebar li.visited .toc-dot::after{ content:"✓"; }
+  .toc-sidebar li.active a{ color:var(--ink); }
+  .toc-sidebar li.active .toc-dot{
+    border-color:var(--coral);
+    box-shadow:0 0 0 3px rgba(255,111,145,0.18);
+  }
+  .toc-sidebar li.active.visited .toc-dot{ background:var(--coral); border-color:var(--coral); }
+
+  @media (max-width:1150px){
+    .toc-sidebar{ display:none; }
+  }
+
   /* ---------- TOP RIBBON ---------- */
   .ribbon{
     position:sticky; top:0; z-index:100;
@@ -410,7 +457,7 @@
   @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 
   @media print{
-    .ribbon, nav, .hero-actions, .hero .eyebrow, .welcome-back, footer, .btn, .note{ display:none !important; }
+    .ribbon, nav, .toc-sidebar, .hero-actions, .hero .eyebrow, .welcome-back, footer, .btn, .note{ display:none !important; }
     body{ background:#fff; color:#111; }
     section.block{ border-top:none; padding:10px 0; }
     .card, .qa-card, .step, .track, .real-talk{ break-inside:avoid; }
@@ -459,6 +506,23 @@
   <a href="#belong">You Belong Here</a>
   <a href="#checklist">30-Day Checklist</a>
 </nav>
+
+<aside class="toc-sidebar" id="toc-sidebar" aria-label="Table of contents">
+  <ul>
+    <li data-target="start-here"><a href="#start-here"><span class="toc-dot"></span><span class="toc-label">Start Here</span></a></li>
+    <li data-target="faq"><a href="#faq"><span class="toc-dot"></span><span class="toc-label">FAQ</span></a></li>
+    <li data-target="toolkit"><a href="#toolkit"><span class="toc-dot"></span><span class="toc-label">Toolkit</span></a></li>
+    <li data-target="guides"><a href="#guides"><span class="toc-dot"></span><span class="toc-label">Guides</span></a></li>
+    <li data-target="glossary"><a href="#glossary"><span class="toc-dot"></span><span class="toc-label">Glossary</span></a></li>
+    <li data-target="project-ideas"><a href="#project-ideas"><span class="toc-dot"></span><span class="toc-label">Project Ideas</span></a></li>
+    <li data-target="portfolio"><a href="#portfolio"><span class="toc-dot"></span><span class="toc-label">Portfolio</span></a></li>
+    <li data-target="resume"><a href="#resume"><span class="toc-dot"></span><span class="toc-label">Resume</span></a></li>
+    <li data-target="interview-prep"><a href="#interview-prep"><span class="toc-dot"></span><span class="toc-label">Interview Prep</span></a></li>
+    <li data-target="real-talk"><a href="#real-talk"><span class="toc-dot"></span><span class="toc-label">Real Talk</span></a></li>
+    <li data-target="belong"><a href="#belong"><span class="toc-dot"></span><span class="toc-label">You Belong Here</span></a></li>
+    <li data-target="checklist"><a href="#checklist"><span class="toc-dot"></span><span class="toc-label">30-Day Checklist</span></a></li>
+  </ul>
+</aside>
 
 <header class="hero">
   <div class="eyebrow">🎓 for students &amp; junior tech folks</div>
@@ -1179,11 +1243,26 @@
   // ---- active nav highlight on scroll ----
   const navLinks = Array.from(document.querySelectorAll('#mainnav a'));
   const sections = navLinks.map(a => document.querySelector(a.getAttribute('href')));
+
+  // ---- TOC sidebar: active + visited tracking ----
+  const tocItems = Array.from(document.querySelectorAll('#toc-sidebar li'));
+  const tocSections = tocItems.map(li => document.getElementById(li.dataset.target));
+
   function onScroll(){
     let idx = 0;
     const y = window.scrollY + 130;
     sections.forEach((sec, i) => { if (sec && sec.offsetTop <= y) idx = i; });
     navLinks.forEach((a,i) => a.classList.toggle('active', i === idx));
+
+    let tocIdx = 0;
+    tocSections.forEach((sec, i) => { if (sec && sec.offsetTop <= y) tocIdx = i; });
+    tocItems.forEach((li, i) => {
+      li.classList.toggle('active', i === tocIdx);
+      const sec = tocSections[i];
+      if (sec && (window.scrollY + window.innerHeight * 0.6) > sec.offsetTop) {
+        li.classList.add('visited');
+      }
+    });
   }
   window.addEventListener('scroll', onScroll);
   onScroll();
