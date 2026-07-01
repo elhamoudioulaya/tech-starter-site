@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Start in Tech :: A friendly field guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #FBF8FF;
+    --bg-alt: #F3EEFB;
+    --card: #FFFFFF;
+    --ink: #241F3D;
+    --ink-dim: #6B6485;
+    --violet: #7C5CBF;
+    --violet-deep: #5B3FA0;
+    --coral: #FF6F91;
+    --teal: #1FA398;
+    --yellow: #FFD166;
+    --line: #E7E0F5;
+    --disp: 'Space Grotesk', sans-serif;
+    --sans: 'Inter', sans-serif;
+    --hand: 'Caveat', cursive;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:var(--sans);
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  ::selection{background:var(--yellow); color:var(--ink);}
+  a{color:var(--violet-deep);}
+  img{max-width:100%;}
+
+  /* ---------- TOP RIBBON ---------- */
+  .ribbon{
+    position:sticky; top:0; z-index:100;
+    background:var(--card);
+    border-bottom:1px solid var(--line);
+    padding:10px 20px;
+    display:flex; align-items:center; gap:16px; flex-wrap:wrap;
+    font-size:13px; color:var(--ink-dim);
+  }
+  .ribbon strong{color:var(--ink);}
+  .ribbon-track{
+    flex:1; min-width:120px; max-width:220px;
+    height:8px; background:var(--bg-alt); border-radius:5px; overflow:hidden;
+  }
+  .ribbon-fill{
+    height:100%; width:0%;
+    background:linear-gradient(90deg, var(--coral), var(--violet));
+    transition:width .4s ease;
+  }
+
+  nav{
+    position:sticky; top:41px; z-index:99;
+    background:var(--bg);
+    border-bottom:1px solid var(--line);
+    overflow-x:auto; white-space:nowrap;
+    padding:0 20px;
+  }
+  nav a{
+    display:inline-block;
+    font-family:var(--disp);
+    font-size:14px; font-weight:600;
+    color:var(--ink-dim);
+    text-decoration:none;
+    padding:14px 16px;
+    border-bottom:2px solid transparent;
+  }
+  nav a:hover, nav a.active{ color:var(--violet-deep); border-bottom-color:var(--coral); }
+
+  /* ---------- sticky-note signature element ---------- */
+  .note{
+    font-family:var(--hand);
+    font-size:20px;
+    line-height:1.3;
+    color:#4A3B1E;
+    background:var(--yellow);
+    padding:14px 16px 16px;
+    border-radius:2px;
+    box-shadow:0 6px 14px rgba(0,0,0,0.12);
+    position:relative;
+    display:inline-block;
+  }
+  .note::before{
+    content:"";
+    position:absolute; top:-10px; left:50%; transform:translateX(-50%) rotate(-3deg);
+    width:60px; height:20px;
+    background:rgba(255,255,255,0.55);
+    border:1px solid rgba(255,255,255,0.7);
+  }
+  .note.tilt-l{ transform:rotate(-3deg); }
+  .note.tilt-r{ transform:rotate(2.5deg); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    max-width:960px; margin:0 auto;
+    padding:80px 24px 60px;
+    text-align:left;
+  }
+  .hero .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:var(--disp); font-size:13px; font-weight:600;
+    color:var(--teal); background:rgba(31,163,152,0.1);
+    border:1px solid rgba(31,163,152,0.3);
+    padding:5px 12px; border-radius:20px;
+    margin-bottom:22px;
+  }
+  .hero h1{
+    font-family:var(--disp);
+    font-size:clamp(30px,5.4vw,52px);
+    font-weight:700; line-height:1.18; letter-spacing:-0.01em;
+    margin-bottom:20px;
+    max-width:780px;
+  }
+  .hero h1 .accent{ color:var(--coral); }
+  .hero p.lede{
+    font-size:18px; color:var(--ink-dim);
+    max-width:600px; margin-bottom:30px;
+  }
+  .hero-actions{ display:flex; gap:14px; flex-wrap:wrap; align-items:center; }
+  .btn{
+    font-family:var(--disp); font-size:14px; font-weight:600;
+    padding:13px 22px; border-radius:10px;
+    text-decoration:none; display:inline-flex; align-items:center; gap:8px;
+    cursor:pointer; border:1px solid transparent;
+    transition:transform .15s ease;
+  }
+  .btn:hover{ transform:translateY(-2px); }
+  .btn-primary{ background:var(--violet); color:#fff; }
+  .btn-ghost{ background:transparent; border-color:var(--line); color:var(--ink); }
+
+  .hero-note-wrap{ margin-top:36px; }
+
+  /* ---------- SECTIONS ---------- */
+  section.block{
+    max-width:1100px; margin:0 auto;
+    padding:64px 24px;
+    border-top:1px solid var(--line);
+  }
+  .block-head{ max-width:680px; margin-bottom:34px; }
+  .block-tag{
+    font-family:var(--disp); font-size:12.5px; font-weight:700;
+    color:var(--violet-deep); text-transform:uppercase; letter-spacing:.06em;
+    margin-bottom:10px; display:block;
+  }
+  .block-head h2{
+    font-family:var(--disp); font-size:clamp(24px,3.6vw,34px); font-weight:700;
+    margin-bottom:10px;
+  }
+  .block-head p{ color:var(--ink-dim); font-size:16px; }
+
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit, minmax(250px,1fr));
+    gap:18px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:22px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{ transform:translateY(-3px); box-shadow:0 10px 24px rgba(90,63,160,0.08); }
+  .card h3{ font-family:var(--disp); font-size:16px; font-weight:600; margin-bottom:8px; }
+  .card p{ color:var(--ink-dim); font-size:14.5px; margin-bottom:10px;}
+  .card a.tool-link{
+    font-size:13.5px; font-weight:600; color:var(--teal);
+    text-decoration:none; display:inline-flex; align-items:center; gap:5px;
+  }
+  .card a.tool-link:hover{ text-decoration:underline; }
+  .pill{
+    display:inline-block; font-size:11px; font-weight:700; font-family:var(--disp);
+    color:var(--violet-deep); background:var(--bg-alt);
+    padding:2px 9px; border-radius:20px; margin-bottom:10px;
+  }
+
+  /* track picker */
+  .track-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:18px; }
+  .track{
+    background:linear-gradient(160deg, var(--card), var(--bg-alt));
+    border:1px solid var(--line); border-radius:16px; padding:24px;
+  }
+  .track .emoji{ font-size:26px; margin-bottom:10px; }
+  .track h3{ font-family:var(--disp); font-size:17px; margin-bottom:6px; }
+  .track p{ color:var(--ink-dim); font-size:14px; margin-bottom:12px; }
+  .track .first-step{ font-size:13px; font-weight:600; color:var(--ink); }
+  .track .first-step span{ color:var(--coral); }
+
+  /* checklist */
+  .checklist{ list-style:none; background:var(--card); border:1px solid var(--line); border-radius:14px; overflow:hidden; }
+  .checklist li{ display:flex; gap:14px; align-items:flex-start; padding:16px 20px; border-bottom:1px solid var(--line); cursor:pointer; }
+  .checklist li:last-child{ border-bottom:none; }
+  .checklist li:hover{ background:var(--bg-alt); }
+  .checklist input{
+    appearance:none; -webkit-appearance:none;
+    width:20px; height:20px; min-width:20px; margin-top:2px;
+    border:1.5px solid var(--line); border-radius:6px; background:var(--bg-alt);
+    cursor:pointer; position:relative;
+  }
+  .checklist input:checked{ background:var(--teal); border-color:var(--teal); }
+  .checklist input:checked::after{ content:"✓"; position:absolute; top:-2px; left:4px; font-size:14px; color:#fff; font-weight:700; }
+  .checklist label{ cursor:pointer; }
+  .checklist label .t{ font-weight:600; display:block; margin-bottom:2px; }
+  .checklist label .d{ color:var(--ink-dim); font-size:13.5px; }
+  .checklist li.done label .t{ color:var(--ink-dim); text-decoration:line-through; text-decoration-color:var(--line); }
+
+  /* belong section */
+  .belong{
+    background:linear-gradient(135deg, #2C2350, #5B3FA0);
+    color:#F4F0FF;
+    border-radius:24px;
+    padding:50px 40px;
+    position:relative;
+    overflow:hidden;
+  }
+  .belong h2{ font-family:var(--disp); font-size:clamp(24px,3.6vw,32px); margin-bottom:14px; }
+  .belong p.lead{ color:#DCD3F7; max-width:640px; font-size:16px; margin-bottom:30px; }
+  .belong-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; }
+  .belong .card{
+    background:rgba(255,255,255,0.07);
+    border:1px solid rgba(255,255,255,0.15);
+  }
+  .belong .card h3{ color:#fff; }
+  .belong .card p{ color:#CFC5EE; }
+  .belong .card a.tool-link{ color:var(--yellow); }
+  .belong-quote{
+    margin-top:32px; font-family:var(--hand); font-size:22px; color:var(--yellow);
+    max-width:600px;
+  }
+
+  footer{
+    max-width:1100px; margin:0 auto; padding:50px 24px 90px;
+    border-top:1px solid var(--line);
+    color:var(--ink-dim); font-size:13.5px;
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px;
+  }
+
+  ::-webkit-scrollbar{ height:8px; width:8px; }
+  ::-webkit-scrollbar-track{ background:var(--bg); }
+  ::-webkit-scrollbar-thumb{ background:var(--line); border-radius:4px; }
+
+  @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
+
+  @media (max-width:640px){
+    .belong{ padding:32px 22px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="ribbon">
+  <span>🌱 <strong>Your first 30 days</strong></span>
+  <div class="ribbon-track"><div class="ribbon-fill" id="ribbon-fill"></div></div>
+  <span id="ribbon-count">0/7 done</span>
+</div>
+
+<nav id="mainnav">
+  <a href="#start-here">Start Here</a>
+  <a href="#toolkit">Toolkit</a>
+  <a href="#guides">Guides</a>
+  <a href="#belong">You Belong Here</a>
+  <a href="#checklist">30-Day Checklist</a>
+</nav>
+
+<header class="hero">
+  <div class="eyebrow">🎓 for students &amp; junior tech folks</div>
+  <h1>Wherever you're starting from, <span class="accent">you're already on the path.</span></h1>
+  <p class="lede">A friendly, no-jargon starting point: the free tools people actually use, the basics explained simply, and a community that's genuinely glad you're here — especially if you're a woman just getting into tech.</p>
+  <div class="hero-actions">
+    <a href="#start-here" class="btn btn-primary">Find my starting point →</a>
+    <a href="#belong" class="btn btn-ghost">Meet the community</a>
+  </div>
+  <div class="hero-note-wrap">
+    <div class="note tilt-l">nobody knows everything on day one — not even the seniors 😉</div>
+  </div>
+</header>
+
+<!-- ============ START HERE ============ -->
+<section class="block" id="start-here">
+  <div class="block-head">
+    <span class="block-tag">Step 1</span>
+    <h2>Pick a lane (you can always change it later)</h2>
+    <p>Tech has more doors in than people tell you. Here are four common starting points — pick whichever sounds most like you today.</p>
+  </div>
+  <div class="track-grid">
+    <div class="track">
+      <div class="emoji">🧰</div>
+      <h3>IT Support / Helpdesk</h3>
+      <p>You like fixing things and helping people directly. Great entry point with no degree required.</p>
+      <div class="first-step">First step: <span>CompTIA A+ study guide</span></div>
+    </div>
+    <div class="track">
+      <div class="emoji">💻</div>
+      <h3>Software Development</h3>
+      <p>You like building things from scratch and seeing them work.</p>
+      <div class="first-step">First step: <span>freeCodeCamp's first module</span></div>
+    </div>
+    <div class="track">
+      <div class="emoji">☁️</div>
+      <h3>Cloud / SysAdmin</h3>
+      <p>You like systems, infrastructure, and keeping things running smoothly.</p>
+      <div class="first-step">First step: <span>a free-tier AWS or Azure account</span></div>
+    </div>
+    <div class="track">
+      <div class="emoji">🔐</div>
+      <h3>Cybersecurity</h3>
+      <p>You like puzzles, and the idea of protecting systems from bad actors excites you.</p>
+      <div class="first-step">First step: <span>TryHackMe's beginner path</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TOOLKIT ============ -->
+<section class="block" id="toolkit">
+  <div class="block-head">
+    <span class="block-tag">Step 2</span>
+    <h2>Your starter toolkit</h2>
+    <p>Free, beginner-friendly, and genuinely used by working professionals — not just "learning" versions of real tools.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <span class="pill">LEARN TO CODE</span>
+      <h3>freeCodeCamp</h3>
+      <p>Free, project-based curriculum covering web dev, Python, and more, with a certificate at the end of each track.</p>
+      <a class="tool-link" href="https://www.freecodecamp.org" target="_blank" rel="noopener">freecodecamp.org ↗</a>
+    </div>
+    <div class="card">
+      <span class="pill">LEARN TO CODE</span>
+      <h3>The Odin Project</h3>
+      <p>A full, structured, free curriculum for web development that reads like a mentor guiding you step by step.</p>
+      <a class="tool-link" href="https://www.theodinproject.com" target="_blank" rel="noopener">theodinproject.com ↗</a>
+    </div>
+    <div class="card">
+      <span class="pill">ROADMAPS</span>
+      <h3>roadmap.sh</h3>
+      <p>Visual, community-maintained roadmaps for every tech role — frontend, DevOps, cybersecurity, and more.</p>
+      <a class="tool-link" href="https://roadmap.sh" target="_blank" rel="noopener">roadmap.sh ↗</a>
+    </div>
+    <div class="card">
+      <span class="pill">TERMINAL PRACTICE</span>
+      <h3>Explainshell</h3>
+      <p>Paste any terminal command and it breaks down exactly what each part does — brilliant for demystifying the command line.</p>
+      <a class="tool-link" href="https://explainshell.com" target="_blank" rel="noopener">explainshell.com ↗</a>
+    </div>
+    <div class="card">
+      <span class="pill">TERMINAL PRACTICE</span>
+      <h3>OverTheWire: Bandit</h3>
+      <p>A gentle, game-like way to get comfortable in a Linux terminal by solving small puzzles.</p>
+      <a class="tool-link" href="https://overthewire.org/wargames/bandit/" target="_blank" rel="noopener">overthewire.org ↗</a>
+    </div>
+    <div class="card">
+      <span class="pill">NETWORKING</span>
+      <h3>Wireshark</h3>
+      <p>The tool professionals use to actually see network traffic — great for turning "networking theory" into something visible.</p>
+      <a class="tool-link" href="https://www.wireshark.org" target="_blank" rel="noopener">wireshark.org ↗</a>
+    </div>
+    <div class="card">
+      <span class="pill">HANDS-ON LABS</span>
+      <h3>TryHackMe</h3>
+      <p>Guided, gamified labs for cybersecurity and networking fundamentals — genuinely built for beginners.</p>
+      <a class="tool-link" href="https://tryhackme.com" target="_blank" rel="noopener">tryhackme.com ↗</a>
+    </div>
+    <div class="card">
+      <span class="pill">CLOUD PRACTICE</span>
+      <h3>Play with Docker</h3>
+      <p>A free, in-browser Docker playground — no installs needed to start learning containers.</p>
+      <a class="tool-link" href="https://labs.play-with-docker.com" target="_blank" rel="noopener">labs.play-with-docker.com ↗</a>
+    </div>
+    <div class="card">
+      <span class="pill">CERT PREP</span>
+      <h3>CompTIA + Professor Messer</h3>
+      <p>CompTIA sets the official A+/Network+/Security+ exam objectives; Professor Messer's free videos are the go-to way to study them.</p>
+      <a class="tool-link" href="https://www.professormesser.com" target="_blank" rel="noopener">professormesser.com ↗</a>
+    </div>
+    <div class="card">
+      <span class="pill">CHEAT SHEETS</span>
+      <h3>ss64 Command Reference</h3>
+      <p>A no-fluff reference for Windows, Linux, and macOS commands — bookmark this one, you'll use it constantly.</p>
+      <a class="tool-link" href="https://ss64.com" target="_blank" rel="noopener">ss64.com ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GUIDES ============ -->
+<section class="block" id="guides">
+  <div class="block-head">
+    <span class="block-tag">Step 3</span>
+    <h2>The basics, explained simply</h2>
+    <p>Short, plain-English explainers for the concepts that come up constantly, but rarely get explained clearly.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h3>🔌 Hardware</h3>
+      <p>CPU = how fast it thinks, RAM = short-term memory, storage = long-term memory. Most "slow computer" complaints are actually a RAM or storage problem, not a CPU one.</p>
+    </div>
+    <div class="card">
+      <h3>🖥️ Operating Systems</h3>
+      <p>Windows Event Viewer, macOS Console, and Linux's <code>journalctl</code> are all the same idea: a black-box recorder you check before you guess.</p>
+    </div>
+    <div class="card">
+      <h3>📶 Networking</h3>
+      <p>Most "the internet is broken" issues are DNS or DHCP, not "the internet." Check: connected? → got an IP? → can resolve a website name?</p>
+    </div>
+    <div class="card">
+      <h3>⌨️ Terminal</h3>
+      <p>You need about 15 commands, not a manual. Start with <code>pwd</code>, <code>ls</code>, <code>cd</code>, <code>ping</code>, and <code>ssh</code> — the rest builds from there.</p>
+    </div>
+    <div class="card">
+      <h3>🎫 Helpdesk skills</h3>
+      <p>Reproduce the issue, isolate one variable at a time, and write the ticket for future-you. Technical skill gets you hired; documentation habits get you trusted.</p>
+    </div>
+    <div class="card">
+      <h3>📈 Career basics</h3>
+      <p>Certs open doors, but a documented project or home lab proves you can actually do the work — bring both to interviews.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ YOU BELONG HERE ============ -->
+<section class="block" id="belong">
+  <div class="belong">
+    <h2>You belong here.</h2>
+    <p class="lead">Tech can feel like a room full of people who already know the secret handshake. They don't — most people are figuring it out in real time, and that includes you. This section is for anyone who wants extra community, especially women who are just getting started.</p>
+    <div class="belong-grid">
+      <div class="card">
+        <h3>Women Who Code</h3>
+        <p>A global community offering study groups, networking, and free technical events for women in tech.</p>
+        <a class="tool-link" href="https://www.womenwhocode.com" target="_blank" rel="noopener">womenwhocode.com ↗</a>
+      </div>
+      <div class="card">
+        <h3>Girls Who Code</h3>
+        <p>Programs and communities aimed at closing the gender gap in tech, from students through early career.</p>
+        <a class="tool-link" href="https://www.girlswhocode.com" target="_blank" rel="noopener">girlswhocode.com ↗</a>
+      </div>
+      <div class="card">
+        <h3>AnitaB.org</h3>
+        <p>Runs the Grace Hopper Celebration and year-round resources connecting women across every stage of a tech career.</p>
+        <a class="tool-link" href="https://anitab.org" target="_blank" rel="noopener">anitab.org ↗</a>
+      </div>
+      <div class="card">
+        <h3>Django Girls</h3>
+        <p>Free, beginner-friendly programming workshops run by volunteers around the world — a genuinely warm first step into code.</p>
+        <a class="tool-link" href="https://djangogirls.org" target="_blank" rel="noopener">djangogirls.org ↗</a>
+      </div>
+    </div>
+    <p class="belong-quote">"You don't need to feel ready. You just need to start — the confidence tends to show up after." 💛</p>
+  </div>
+</section>
+
+<!-- ============ CHECKLIST ============ -->
+<section class="block" id="checklist">
+  <div class="block-head">
+    <span class="block-tag">Step 4</span>
+    <h2>Your first 30 days</h2>
+    <p>Small, concrete steps. Check them off as you go — momentum matters more than speed.</p>
+  </div>
+
+  <ul class="checklist">
+    <li>
+      <input type="checkbox" id="c1">
+      <label for="c1"><span class="t">Set up your dev/practice environment</span><span class="d">Install a code editor (VS Code is a safe default) and get comfortable opening a terminal.</span></label>
+    </li>
+    <li>
+      <input type="checkbox" id="c2">
+      <label for="c2"><span class="t">Finish one full tutorial module</span><span class="d">Pick freeCodeCamp or The Odin Project and complete just the first section — don't aim for the whole course yet.</span></label>
+    </li>
+    <li>
+      <input type="checkbox" id="c3">
+      <label for="c3"><span class="t">Join one community</span><span class="d">Women Who Code, a Discord, a subreddit — anywhere you can ask a "dumb" question and get a kind answer.</span></label>
+    </li>
+    <li>
+      <input type="checkbox" id="c4">
+      <label for="c4"><span class="t">Ask one question out loud</span><span class="d">In a forum, a group chat, anywhere. The people who look confident all started by asking questions too.</span></label>
+    </li>
+    <li>
+      <input type="checkbox" id="c5">
+      <label for="c5"><span class="t">Build one tiny thing</span><span class="d">A basic webpage, a script that renames files, anything real — however small.</span></label>
+    </li>
+    <li>
+      <input type="checkbox" id="c6">
+      <label for="c6"><span class="t">Practice 15 terminal commands</span><span class="d">Use Explainshell or OverTheWire's Bandit until the command line feels less like a foreign language.</span></label>
+    </li>
+    <li>
+      <input type="checkbox" id="c7">
+      <label for="c7"><span class="t">Update your LinkedIn/resume with what you just did</span><span class="d">Even "completed freeCodeCamp's first module" counts — document your progress as you make it.</span></label>
+    </li>
+  </ul>
+  <div style="margin-top:28px;">
+    <div class="note tilt-r">progress isn't linear — bad days don't erase the good ones ✨</div>
+  </div>
+</section>
+
+<footer>
+  <span>Made for anyone starting their tech journey — glad you're here 💛</span>
+  <span id="footer-time"></span>
+</footer>
+
+<script>
+  document.getElementById('footer-time').textContent =
+    'updated ' + new Date().toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
+
+  // ---- checklist progress (in-memory only; add localStorage if self-hosting) ----
+  const boxes = Array.from(document.querySelectorAll('.checklist input[type="checkbox"]'));
+  const countEl = document.getElementById('ribbon-count');
+  const fillEl = document.getElementById('ribbon-fill');
+
+  function updateProgress(){
+    const total = boxes.length;
+    const done = boxes.filter(b => b.checked).length;
+    countEl.textContent = `${done}/${total} done`;
+    fillEl.style.width = total ? `${(done/total)*100}%` : '0%';
+  }
+
+  boxes.forEach(box => {
+    box.addEventListener('change', () => {
+      box.closest('li').classList.toggle('done', box.checked);
+      updateProgress();
+    });
+  });
+  updateProgress();
+
+  // ---- active nav highlight on scroll ----
+  const navLinks = Array.from(document.querySelectorAll('#mainnav a'));
+  const sections = navLinks.map(a => document.querySelector(a.getAttribute('href')));
+  function onScroll(){
+    let idx = 0;
+    const y = window.scrollY + 130;
+    sections.forEach((sec, i) => { if (sec && sec.offsetTop <= y) idx = i; });
+    navLinks.forEach((a,i) => a.classList.toggle('active', i === idx));
+  }
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+</script>
+
+</body>
+</html>
