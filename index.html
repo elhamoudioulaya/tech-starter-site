@@ -23,6 +23,23 @@
     --sans: 'Inter', sans-serif;
     --hand: 'Caveat', cursive;
   }
+  html[data-theme="dark"]{
+    --bg: #171225;
+    --bg-alt: #221B36;
+    --card: #241D3B;
+    --ink: #F1ECFF;
+    --ink-dim: #B3A9D6;
+    --violet: #A78BFA;
+    --violet-deep: #C9B8FF;
+    --coral: #FF8FA3;
+    --teal: #5EEAD4;
+    --yellow: #FFD166;
+    --line: #382C55;
+  }
+  html[data-theme="dark"] body{ background:var(--bg); color:var(--ink); }
+  html[data-theme="dark"] .btn-primary{ color:#171225; }
+  html[data-theme="dark"] .note{ color:#3B2E12; }
+
   *{box-sizing:border-box; margin:0; padding:0;}
   html{scroll-behavior:smooth;}
   body{
@@ -35,6 +52,36 @@
   ::selection{background:var(--yellow); color:var(--ink);}
   a{color:var(--violet-deep);}
   img{max-width:100%;}
+
+  .site-search{
+    font-family:var(--sans); font-size:13px;
+    background:var(--bg-alt); border:1px solid var(--line); border-radius:8px;
+    padding:6px 12px; color:var(--ink);
+    width:160px; max-width:40vw;
+  }
+  .site-search::placeholder{ color:var(--ink-dim); }
+  .site-search:focus{ outline:2px solid var(--violet); outline-offset:1px; }
+
+  .theme-toggle{
+    background:var(--bg-alt); border:1px solid var(--line); border-radius:8px;
+    width:30px; height:30px; cursor:pointer; font-size:14px;
+    display:flex; align-items:center; justify-content:center;
+    margin-left:auto;
+  }
+
+  .welcome-back{
+    background:linear-gradient(90deg, var(--violet), var(--coral));
+    color:#fff; font-size:13.5px; font-weight:600;
+    padding:10px 20px;
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+  }
+  .welcome-back button{
+    background:transparent; border:none; color:#fff; cursor:pointer;
+    font-size:14px; opacity:.85;
+  }
+  .welcome-back button:hover{ opacity:1; }
+
+  .search-hide{ display:none !important; }
 
   /* ---------- TOP RIBBON ---------- */
   .ribbon{
@@ -226,6 +273,33 @@
     display:inline-block;
   }
 
+  /* FAQ accordion */
+  .faq-item{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    margin-bottom:10px; overflow:hidden;
+  }
+  .faq-item summary{
+    font-family:var(--disp); font-weight:600; font-size:15px;
+    padding:16px 20px; cursor:pointer; list-style:none;
+    display:flex; justify-content:space-between; align-items:center; gap:12px;
+  }
+  .faq-item summary::-webkit-details-marker{ display:none; }
+  .faq-item summary::after{
+    content:"+"; font-size:20px; color:var(--violet); flex-shrink:0;
+    transition:transform .2s ease;
+  }
+  .faq-item[open] summary::after{ transform:rotate(45deg); }
+  .faq-item .faq-a{ padding:0 20px 18px; color:var(--ink-dim); font-size:14.5px; }
+
+  /* real talk */
+  .real-talk{
+    background:var(--bg-alt); border:1px solid var(--line);
+    border-radius:16px; padding:28px;
+  }
+  .real-talk h3{ font-family:var(--disp); font-size:15.5px; margin-bottom:8px; }
+  .real-talk p{ color:var(--ink-dim); font-size:14.5px; }
+  .real-talk + .real-talk{ margin-top:16px; }
+
   /* interview prep */
   .qa-card{
     background:var(--card); border:1px solid var(--line); border-radius:12px;
@@ -335,8 +409,24 @@
 
   @media (prefers-reduced-motion: reduce){ *{ transition:none !important; } }
 
+  @media print{
+    .ribbon, nav, .hero-actions, .hero .eyebrow, .welcome-back, footer, .btn, .note{ display:none !important; }
+    body{ background:#fff; color:#111; }
+    section.block{ border-top:none; padding:10px 0; }
+    .card, .qa-card, .step, .track, .real-talk{ break-inside:avoid; }
+  }
+  body.print-mode section.block{ display:none !important; }
+  body.print-mode[data-print-target="resume"] #resume,
+  body.print-mode[data-print-target="interview-prep"] #interview-prep{
+    display:block !important;
+  }
+
   @media (max-width:640px){
     .belong{ padding:32px 22px; }
+    .ribbon{ font-size:12px; padding:8px 14px; gap:10px; }
+    .site-search{ width:120px; }
+    .hero{ padding:60px 20px 44px; }
+    section.block{ padding:48px 20px; }
   }
 </style>
 </head>
@@ -346,10 +436,18 @@
   <span>🌱 <strong>Your first 30 days</strong></span>
   <div class="ribbon-track"><div class="ribbon-fill" id="ribbon-fill"></div></div>
   <span id="ribbon-count">0/30 done</span>
+  <input type="search" id="site-search" class="site-search" placeholder="Search this site…" aria-label="Search this site">
+  <button id="theme-toggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">🌙</button>
+</div>
+
+<div id="welcome-back" class="welcome-back" hidden>
+  <span id="welcome-back-text"></span>
+  <button id="welcome-back-dismiss" aria-label="Dismiss">✕</button>
 </div>
 
 <nav id="mainnav">
   <a href="#start-here">Start Here</a>
+  <a href="#faq">FAQ</a>
   <a href="#toolkit">Toolkit</a>
   <a href="#guides">Guides</a>
   <a href="#glossary">Glossary</a>
@@ -357,6 +455,7 @@
   <a href="#portfolio">Portfolio</a>
   <a href="#resume">Resume</a>
   <a href="#interview-prep">Interview Prep</a>
+  <a href="#real-talk">Real Talk</a>
   <a href="#belong">You Belong Here</a>
   <a href="#checklist">30-Day Checklist</a>
 </nav>
@@ -409,10 +508,44 @@
   </div>
 </section>
 
+<!-- ============ FAQ ============ -->
+<section class="block" id="faq">
+  <div class="block-head">
+    <span class="block-tag">Step 2</span>
+    <h2>The questions you're too embarrassed to ask</h2>
+    <p>Nobody asks these out loud, so here they are, answered plainly.</p>
+  </div>
+
+  <details class="faq-item">
+    <summary>Do I need a degree to work in tech?</summary>
+    <div class="faq-a">No, not for most entry-level roles, especially in IT support, helpdesk, and increasingly in development. What matters more is demonstrable skill — a portfolio, certs, or hands-on projects. A degree helps in some companies and countries, but it's not the only door in.</div>
+  </details>
+  <details class="faq-item">
+    <summary>How long until I'm "job-ready"?</summary>
+    <div class="faq-a">There's no fixed number, but many people land an entry-level role within 6-12 months of consistent, focused effort — not casual browsing, actual building. Progress compounds: the first project is the slowest, the fifth is much faster.</div>
+  </details>
+  <details class="faq-item">
+    <summary>Is [language/tool] already outdated? Should I even bother learning it?</summary>
+    <div class="faq-a">Almost never as dead as social media makes it sound. Widely-used languages and tools (Python, JavaScript, SQL, Linux fundamentals) stay relevant for years. Fundamentals transfer between tools far more than people starting out realize.</div>
+  </details>
+  <details class="faq-item">
+    <summary>I feel like I'm behind everyone else. Am I?</summary>
+    <div class="faq-a">Almost certainly not — you're comparing your day 1 to someone else's year 3 highlight reel. Everyone you'll meet in tech had a moment exactly like this one.</div>
+  </details>
+  <details class="faq-item">
+    <summary>Should I learn everything, or specialize early?</summary>
+    <div class="faq-a">Generalize first. A few months of broad exposure (see the Start Here tracks) helps you choose a specialty based on real experience instead of a guess.</div>
+  </details>
+  <details class="faq-item">
+    <summary>What if I ask a question and it turns out to be really basic?</summary>
+    <div class="faq-a">It will happen, and it's fine. The engineers who look most confident answering basic questions are usually the ones who got comfortable asking them early and often.</div>
+  </details>
+</section>
+
 <!-- ============ TOOLKIT ============ -->
 <section class="block" id="toolkit">
   <div class="block-head">
-    <span class="block-tag">Step 2</span>
+    <span class="block-tag">Step 3</span>
     <h2>Your starter toolkit</h2>
     <p>Free, beginner-friendly, and genuinely used by working professionals — not just "learning" versions of real tools.</p>
   </div>
@@ -478,13 +611,37 @@
       <p>A no-fluff reference for Windows, Linux, and macOS commands — bookmark this one, you'll use it constantly.</p>
       <a class="tool-link" href="https://ss64.com" target="_blank" rel="noopener">ss64.com ↗</a>
     </div>
+    <div class="card">
+      <span class="pill">CHEAT SHEETS</span>
+      <h3>Git Cheat Sheet (GitHub)</h3>
+      <p>GitHub's own quick reference for the Git commands you'll reach for constantly — clone, commit, branch, merge, revert.</p>
+      <a class="tool-link" href="https://education.github.com/git-cheat-sheet-education.pdf" target="_blank" rel="noopener">education.github.com ↗</a>
+    </div>
+    <div class="card">
+      <span class="pill">DESIGN</span>
+      <h3>Figma</h3>
+      <p>The free, browser-based design tool most teams actually use for mockups and UI — useful even outside a design role, for sketching ideas before you build.</p>
+      <a class="tool-link" href="https://www.figma.com" target="_blank" rel="noopener">figma.com ↗</a>
+    </div>
+    <div class="card">
+      <span class="pill">PROJECT MANAGEMENT</span>
+      <h3>Trello</h3>
+      <p>A simple drag-and-drop board for tracking tasks — great for organizing your own learning plan or a small project's to-do list.</p>
+      <a class="tool-link" href="https://trello.com" target="_blank" rel="noopener">trello.com ↗</a>
+    </div>
+    <div class="card">
+      <span class="pill">PROJECT MANAGEMENT</span>
+      <h3>Notion</h3>
+      <p>A flexible notes-and-docs workspace — many people use it to build their own personal wiki of what they've learned.</p>
+      <a class="tool-link" href="https://www.notion.so" target="_blank" rel="noopener">notion.so ↗</a>
+    </div>
   </div>
 </section>
 
 <!-- ============ GUIDES ============ -->
 <section class="block" id="guides">
   <div class="block-head">
-    <span class="block-tag">Step 3</span>
+    <span class="block-tag">Step 4</span>
     <h2>The basics, explained simply</h2>
     <p>Short, plain-English explainers for the concepts that come up constantly, but rarely get explained clearly.</p>
   </div>
@@ -520,7 +677,7 @@
 <!-- ============ GLOSSARY ============ -->
 <section class="block" id="glossary">
   <div class="block-head">
-    <span class="block-tag">Step 4</span>
+    <span class="block-tag">Step 5</span>
     <h2>The glossary nobody hands you</h2>
     <p>Terms that get dropped into conversations constantly, on the assumption everyone already knows them. Now you do.</p>
   </div>
@@ -550,7 +707,7 @@
 <!-- ============ PROJECT IDEAS ============ -->
 <section class="block" id="project-ideas">
   <div class="block-head">
-    <span class="block-tag">Step 5</span>
+    <span class="block-tag">Step 6</span>
     <h2>Stuck on what to build? Start here.</h2>
     <p>"Pick a project" is easy to say and hard to do at 11pm with a blank screen. Here are real starter ideas, grouped by track.</p>
   </div>
@@ -595,7 +752,7 @@
 <!-- ============ PORTFOLIO ============ -->
 <section class="block" id="portfolio">
   <div class="block-head">
-    <span class="block-tag">Step 6</span>
+    <span class="block-tag">Step 7</span>
     <h2>Build a portfolio — step by step</h2>
     <p>A resume tells people what you claim you can do. A portfolio shows them. It's often the single biggest lever for a junior profile with limited "real" work experience.</p>
   </div>
@@ -684,9 +841,10 @@
 <!-- ============ RESUME ============ -->
 <section class="block" id="resume">
   <div class="block-head">
-    <span class="block-tag">Step 7</span>
+    <span class="block-tag">Step 8</span>
     <h2>Write a resume with "no experience"</h2>
     <p>Most junior resumes fail before anyone judges the content — they're trying to sound like a senior's resume instead of an honest, well-organized junior one. Here's a structure that actually works.</p>
+    <button class="btn btn-ghost no-print" onclick="printSection('resume')" style="margin-top:16px;">🖨️ Print this guide</button>
   </div>
 
   <div class="steps">
@@ -749,9 +907,10 @@
 <!-- ============ INTERVIEW PREP ============ -->
 <section class="block" id="interview-prep">
   <div class="block-head">
-    <span class="block-tag">Step 8</span>
+    <span class="block-tag">Step 9</span>
     <h2>Interview prep basics</h2>
     <p>You won't be asked to recite documentation from memory — most junior interviews are checking whether you can reason clearly and explain your thinking. A few common questions per track, plus the behavioral ones that catch people off guard.</p>
+    <button class="btn btn-ghost no-print" onclick="printSection('interview-prep')" style="margin-top:16px;">🖨️ Print this guide</button>
   </div>
 
   <div class="prep-track-label">🧰 IT Support / Helpdesk</div>
@@ -781,6 +940,40 @@
 
   <div style="margin-top:24px;">
     <div class="note tilt-l">you're not expected to know everything — you're expected to think out loud clearly</div>
+  </div>
+</section>
+
+<!-- ============ REAL TALK ============ -->
+<section class="block" id="real-talk">
+  <div class="block-head">
+    <span class="block-tag">Step 10</span>
+    <h2>Real talk</h2>
+    <p>The honest parts nobody puts in the tutorial.</p>
+  </div>
+
+  <div class="real-talk">
+    <h3>The job market is genuinely competitive right now</h3>
+    <p>Entry-level tech hiring has been tighter the last couple of years than the "learn to code, get rich" era implied. That doesn't mean it's closed — it means volume matters: more applications, more projects, more visible effort than you might expect. Consistency beats intensity here.</p>
+  </div>
+  <div class="real-talk">
+    <h3>Rejection is data, not a verdict</h3>
+    <p>Most junior applicants get far more no's than yes's before their first offer — that's true even for people who go on to have solid careers. One rejection tells you almost nothing about your ceiling; a pattern across many might tell you what to adjust.</p>
+  </div>
+  <div class="real-talk">
+    <h3>Imposter syndrome doesn't fully go away — it just gets quieter</h3>
+    <p>Most people carry some version of "do I actually belong here" well into their careers. The goal isn't to eliminate the feeling before you start; it's to keep going while it's still there.</p>
+  </div>
+  <div class="real-talk">
+    <h3>Your first role won't be your last, and it doesn't have to be perfect</h3>
+    <p>It's tempting to hold out for the "right" first job. A decent first role that gets you real experience is usually worth more than months of waiting for an ideal one that may not exist yet.</p>
+  </div>
+  <div class="real-talk">
+    <h3>Comparing your pace to others online is a losing game</h3>
+    <p>Loud success stories are overrepresented online; quiet, slower progress is not, even though it's far more common. Your timeline is allowed to look different.</p>
+  </div>
+
+  <div style="margin-top:24px;">
+    <div class="note tilt-r">slow progress you keep making beats fast progress you give up on</div>
   </div>
 </section>
 
@@ -818,7 +1011,7 @@
 <!-- ============ CHECKLIST ============ -->
 <section class="block" id="checklist">
   <div class="block-head">
-    <span class="block-tag">Step 9</span>
+    <span class="block-tag">Step 11</span>
     <h2>Your first 30 days</h2>
     <p>One small, concrete step per day. You don't need to do them in exact order or on the exact day — the point is momentum, not a perfect streak.</p>
   </div>
@@ -884,6 +1077,48 @@
   document.getElementById('footer-time').textContent =
     'updated ' + new Date().toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
 
+  // ---- dark mode toggle ----
+  const THEME_KEY = 'tech-starter-theme';
+  const themeBtn = document.getElementById('theme-toggle');
+  function applyTheme(theme){
+    document.documentElement.setAttribute('data-theme', theme);
+    themeBtn.textContent = theme === 'dark' ? '☀️' : '🌙';
+  }
+  const savedTheme = localStorage.getItem(THEME_KEY);
+  if (savedTheme) {
+    applyTheme(savedTheme);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    applyTheme('dark');
+  }
+  themeBtn.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    const next = current === 'dark' ? 'light' : 'dark';
+    applyTheme(next);
+    try{ localStorage.setItem(THEME_KEY, next); } catch(e) {}
+  });
+
+  // ---- print a single section ----
+  function printSection(id){
+    document.body.classList.add('print-mode');
+    document.body.setAttribute('data-print-target', id);
+    window.print();
+    setTimeout(() => {
+      document.body.classList.remove('print-mode');
+      document.body.removeAttribute('data-print-target');
+    }, 300);
+  }
+
+  // ---- site search / filter ----
+  const searchInput = document.getElementById('site-search');
+  const searchableSelector = '.card, .qa-card, .term, .faq-item, .checklist li, .track, .real-talk';
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.trim().toLowerCase();
+    document.querySelectorAll(searchableSelector).forEach(el => {
+      const matches = q === '' || el.textContent.toLowerCase().includes(q);
+      el.classList.toggle('search-hide', !matches);
+    });
+  });
+
   // ---- checklist progress, persisted via localStorage ----
   const boxes = Array.from(document.querySelectorAll('.checklist input[type="checkbox"]'));
   const countEl = document.getElementById('ribbon-count');
@@ -925,6 +1160,21 @@
 
   loadState();
   updateProgress();
+  showWelcomeBack();
+
+  function showWelcomeBack(){
+    const doneIds = boxes.filter(b => b.checked).map(b => parseInt(b.id.replace('c',''), 10)).filter(n => !isNaN(n));
+    if (doneIds.length === 0) return;
+    const highestDay = Math.max(...doneIds);
+    const nextDay = Math.min(highestDay + 1, boxes.length);
+    const banner = document.getElementById('welcome-back');
+    const text = document.getElementById('welcome-back-text');
+    text.textContent = `Welcome back — you're on Day ${nextDay}. Keep going! 🌱`;
+    banner.hidden = false;
+    document.getElementById('welcome-back-dismiss').addEventListener('click', () => {
+      banner.hidden = true;
+    });
+  }
 
   // ---- active nav highlight on scroll ----
   const navLinks = Array.from(document.querySelectorAll('#mainnav a'));
