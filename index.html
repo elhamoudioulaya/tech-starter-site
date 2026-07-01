@@ -226,6 +226,47 @@
     display:inline-block;
   }
 
+  /* interview prep */
+  .qa-card{
+    background:var(--card); border:1px solid var(--line); border-radius:12px;
+    padding:18px 20px; margin-bottom:12px;
+  }
+  .qa-card .q{
+    font-family:var(--disp); font-weight:600; font-size:14.5px;
+    color:var(--ink); margin-bottom:6px; display:flex; gap:10px;
+  }
+  .qa-card .q .qmark{ color:var(--coral); }
+  .qa-card .a{ color:var(--ink-dim); font-size:14px; }
+  .prep-track-label{
+    font-family:var(--disp); font-size:13px; font-weight:700;
+    color:var(--violet-deep); text-transform:uppercase; letter-spacing:.05em;
+    margin:30px 0 14px;
+  }
+  .prep-track-label:first-of-type{ margin-top:0; }
+
+  /* glossary */
+  .glossary{
+    columns:2; column-gap:28px;
+  }
+  @media (max-width:720px){ .glossary{ columns:1; } }
+  .term{
+    break-inside:avoid; margin-bottom:20px;
+    padding-bottom:16px; border-bottom:1px solid var(--line);
+  }
+  .term dt{
+    font-family:var(--disp); font-weight:700; font-size:15px;
+    color:var(--violet-deep); margin-bottom:4px;
+  }
+  .term dd{ color:var(--ink-dim); font-size:14px; }
+
+  /* project ideas */
+  .idea-group{ margin-bottom:36px; }
+  .idea-group:last-child{ margin-bottom:0; }
+  .idea-group h3{
+    font-family:var(--disp); font-size:16px; font-weight:600;
+    margin-bottom:14px; display:flex; align-items:center; gap:8px;
+  }
+
   /* portfolio steps */
   .why-strip{
     display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -311,7 +352,11 @@
   <a href="#start-here">Start Here</a>
   <a href="#toolkit">Toolkit</a>
   <a href="#guides">Guides</a>
+  <a href="#glossary">Glossary</a>
+  <a href="#project-ideas">Project Ideas</a>
   <a href="#portfolio">Portfolio</a>
+  <a href="#resume">Resume</a>
+  <a href="#interview-prep">Interview Prep</a>
   <a href="#belong">You Belong Here</a>
   <a href="#checklist">30-Day Checklist</a>
 </nav>
@@ -472,10 +517,85 @@
   </div>
 </section>
 
+<!-- ============ GLOSSARY ============ -->
+<section class="block" id="glossary">
+  <div class="block-head">
+    <span class="block-tag">Step 4</span>
+    <h2>The glossary nobody hands you</h2>
+    <p>Terms that get dropped into conversations constantly, on the assumption everyone already knows them. Now you do.</p>
+  </div>
+
+  <dl class="glossary">
+    <div class="term"><dt>API</dt><dd>A defined way for two pieces of software to talk to each other — like a menu of requests one program can make to another.</dd></div>
+    <div class="term"><dt>Repo (repository)</dt><dd>A folder tracked by Git, containing a project's code and its full history of changes.</dd></div>
+    <div class="term"><dt>Commit</dt><dd>A saved snapshot of your code at a point in time, with a message describing what changed.</dd></div>
+    <div class="term"><dt>Push / Pull</dt><dd>Push sends your local commits to a remote repo (like GitHub). Pull brings down changes made by others.</dd></div>
+    <div class="term"><dt>Branch</dt><dd>A separate line of work off the main codebase, so you can experiment without touching the working version.</dd></div>
+    <div class="term"><dt>Deploy</dt><dd>Taking code from your machine and making it live/accessible — like publishing this site to GitHub Pages.</dd></div>
+    <div class="term"><dt>Staging vs Production</dt><dd>Staging is a practice environment that mirrors the real thing. Production is what actual users see.</dd></div>
+    <div class="term"><dt>Bug</dt><dd>Anything the code does that it wasn't supposed to do. Not a personal failure — just the next thing to fix.</dd></div>
+    <div class="term"><dt>Debugging</dt><dd>The process of finding out why something's broken, usually by narrowing down where it stops behaving as expected.</dd></div>
+    <div class="term"><dt>Stack</dt><dd>The combination of tools/technologies used to build something (e.g. "the stack" for a website might be React + Node + PostgreSQL).</dd></div>
+    <div class="term"><dt>Front-end / Back-end</dt><dd>Front-end is what users see and click. Back-end is the server, database, and logic behind the scenes.</dd></div>
+    <div class="term"><dt>Cloud</dt><dd>Renting computing power/storage from a provider (AWS, Azure, GCP) instead of running your own physical servers.</dd></div>
+    <div class="term"><dt>Container</dt><dd>A lightweight, self-contained package of an app and everything it needs to run, so it behaves the same anywhere (Docker is the most common tool).</dd></div>
+    <div class="term"><dt>Sprint</dt><dd>A short, fixed period (often 1-2 weeks) a team works in before reviewing progress — a common Agile/Scrum practice.</dd></div>
+    <div class="term"><dt>Ticket</dt><dd>A tracked unit of work — a bug report, feature request, or support issue — usually logged in a tool like Jira.</dd></div>
+    <div class="term"><dt>Latency</dt><dd>The delay between an action and its response — high latency is why a page feels "laggy."</dd></div>
+    <div class="term"><dt>Uptime</dt><dd>The percentage of time a system is running and available, as opposed to down or broken.</dd></div>
+    <div class="term"><dt>SSH</dt><dd>A secure way to remotely access and control another computer's command line over a network.</dd></div>
+  </dl>
+</section>
+
+<!-- ============ PROJECT IDEAS ============ -->
+<section class="block" id="project-ideas">
+  <div class="block-head">
+    <span class="block-tag">Step 5</span>
+    <h2>Stuck on what to build? Start here.</h2>
+    <p>"Pick a project" is easy to say and hard to do at 11pm with a blank screen. Here are real starter ideas, grouped by track.</p>
+  </div>
+
+  <div class="idea-group">
+    <h3>🧰 IT Support / Helpdesk</h3>
+    <div class="grid">
+      <div class="card"><h3>Home network map</h3><p>Document every device on your home network, its IP, and what it's for — then write up how you'd troubleshoot each one going offline.</p></div>
+      <div class="card"><h3>IT troubleshooting flowchart</h3><p>Build a decision-tree diagram for a common issue (e.g. "no internet") — great for showing structured thinking in interviews.</p></div>
+      <div class="card"><h3>Personal ticket log</h3><p>Track every tech problem you personally solve for a month, formatted like real support tickets, symptoms → fix.</p></div>
+    </div>
+  </div>
+
+  <div class="idea-group">
+    <h3>💻 Software Development</h3>
+    <div class="grid">
+      <div class="card"><h3>Habit tracker</h3><p>A simple app to check off daily habits — touches on state, storage, and UI basics without needing a backend.</p></div>
+      <div class="card"><h3>Personal expense tracker</h3><p>Log spending by category with basic totals and charts — a genuinely useful tool you'll actually keep using.</p></div>
+      <div class="card"><h3>A clone of something small</h3><p>Rebuild a simplified version of an app you use daily (a to-do list, a timer, a notes app) — cloning teaches you to read intent, not just syntax.</p></div>
+    </div>
+  </div>
+
+  <div class="idea-group">
+    <h3>☁️ Cloud / SysAdmin</h3>
+    <div class="grid">
+      <div class="card"><h3>Deploy a static site</h3><p>Host this kind of site on a free-tier cloud bucket (S3, Azure Blob) instead of GitHub Pages — same result, different pipeline.</p></div>
+      <div class="card"><h3>Automated backup script</h3><p>A script that backs up a folder on a schedule — introduces cron jobs / task scheduling, a real sysadmin skill.</p></div>
+      <div class="card"><h3>Home lab server</h3><p>Set up a spare machine (or a VM) running a small self-hosted app, like a Pi-hole or a personal wiki.</p></div>
+    </div>
+  </div>
+
+  <div class="idea-group">
+    <h3>🔐 Cybersecurity</h3>
+    <div class="grid">
+      <div class="card"><h3>Password strength checker</h3><p>A small tool that scores password strength and explains why — teaches you the actual reasoning behind "good" passwords.</p></div>
+      <div class="card"><h3>Phishing email breakdown</h3><p>Annotate 3-5 real phishing emails (safely, from public examples) explaining exactly what gives each one away.</p></div>
+      <div class="card"><h3>Personal home network audit</h3><p>Use a tool like Wireshark to capture and explain your own home network traffic for 10 minutes — write up what you found.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ PORTFOLIO ============ -->
 <section class="block" id="portfolio">
   <div class="block-head">
-    <span class="block-tag">Step 5</span>
+    <span class="block-tag">Step 6</span>
     <h2>Build a portfolio — step by step</h2>
     <p>A resume tells people what you claim you can do. A portfolio shows them. It's often the single biggest lever for a junior profile with limited "real" work experience.</p>
   </div>
@@ -561,6 +681,109 @@
   </div>
 </section>
 
+<!-- ============ RESUME ============ -->
+<section class="block" id="resume">
+  <div class="block-head">
+    <span class="block-tag">Step 7</span>
+    <h2>Write a resume with "no experience"</h2>
+    <p>Most junior resumes fail before anyone judges the content — they're trying to sound like a senior's resume instead of an honest, well-organized junior one. Here's a structure that actually works.</p>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Lead with a short summary, not an objective</h3>
+        <p>Two lines on what you're focused on learning and what kind of role you want — skip "seeking a challenging opportunity," it says nothing.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Put Projects above Experience</h3>
+        <p>If your strongest proof of skill is a project, not a job, lead with it. Resumes don't have to follow a fixed order — lead with your strongest section.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Describe projects by outcome, not just tech used</h3>
+        <p>Weak: "Built a habit tracker using React." Stronger: "Built and deployed a habit tracker used daily, handling state across 4 views." Say what it does and that it's real and live.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Reframe non-tech experience honestly</h3>
+        <p>Retail, service, or admin work usually has real transferable skills — troubleshooting under pressure, documentation, working a queue of requests. Name them plainly, don't force awkward tech metaphors.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>List tools you can actually speak to</h3>
+        <p>A skills section with 25 buzzwords invites questions you can't answer. List what you can genuinely discuss for 2 minutes if asked.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h3>Keep it to one page</h3>
+        <p>As a junior candidate, one tight page reads as focused. Two thin pages read as padded.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <h3>Link your portfolio at the top</h3>
+        <p>Not buried in a footer — right under your name, next to your email. It's often the first link a recruiter actually clicks.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <div class="note tilt-r">"no experience" almost always means "no job title yet" — you have more proof than you think</div>
+  </div>
+</section>
+
+<!-- ============ INTERVIEW PREP ============ -->
+<section class="block" id="interview-prep">
+  <div class="block-head">
+    <span class="block-tag">Step 8</span>
+    <h2>Interview prep basics</h2>
+    <p>You won't be asked to recite documentation from memory — most junior interviews are checking whether you can reason clearly and explain your thinking. A few common questions per track, plus the behavioral ones that catch people off guard.</p>
+  </div>
+
+  <div class="prep-track-label">🧰 IT Support / Helpdesk</div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>A user says "the internet is down." What do you check first?</div><div class="a">Walk through your own troubleshooting order out loud — cable/wifi connected, has an IP, can resolve a domain name. Interviewers are grading your process, not just the final answer.</div></div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>What's the difference between a process and a service?</div><div class="a">A process is running right now; a service is configured to start automatically. Being able to explain this plainly shows real OS understanding.</div></div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>Describe a time you fixed something you didn't fully understand at first.</div><div class="a">Structure it as: what you observed, what you tried, what actually fixed it, and what you learned — this format works for almost any "tell me about a time" question.</div></div>
+
+  <div class="prep-track-label">💻 Software Development</div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>Walk me through a project on your portfolio.</div><div class="a">Have a 60-90 second version ready for each project: the problem, your approach, one technical decision, and one thing you'd change now.</div></div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>What's the difference between front-end and back-end?</div><div class="a">Front-end is what the user sees and interacts with; back-end is the server, database, and logic behind it. Simple, correct answers beat over-explained ones.</div></div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>How do you approach debugging something you've never seen before?</div><div class="a">Reproduce it, isolate one variable at a time, check logs/error messages first before guessing — the same instinct from the Helpdesk guide applies directly here.</div></div>
+
+  <div class="prep-track-label">☁️ Cloud / SysAdmin</div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>What's the difference between scaling up and scaling out?</div><div class="a">Scaling up means a bigger/more powerful single machine; scaling out means adding more machines to share the load.</div></div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>Why would you use a container instead of a full virtual machine?</div><div class="a">Containers are lighter and faster to start since they share the host OS kernel, while VMs run a full separate OS each.</div></div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>Describe a time something you set up broke unexpectedly.</div><div class="a">Focus on what monitoring or symptom told you something was wrong, and what you changed afterward to catch it faster next time.</div></div>
+
+  <div class="prep-track-label">🔐 Cybersecurity</div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>What makes a password "strong," really?</div><div class="a">Length matters more than complexity rules — a long passphrase beats a short password with symbols. Be ready to explain why, not just state it.</div></div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>How would you recognize a phishing email?</div><div class="a">Mismatched sender domains, urgency/pressure language, and links that don't match their displayed text are the classic tells — mention specifics, not just "it looked suspicious."</div></div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>What's the difference between authentication and authorization?</div><div class="a">Authentication proves who you are (logging in); authorization determines what you're allowed to do once you're in.</div></div>
+
+  <div class="prep-track-label">🗣️ Behavioral (every track)</div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>Tell me about a time you disagreed with someone on a project.</div><div class="a">Show that you can hold a technical opinion and still collaborate — the resolution matters more than who was "right."</div></div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>How do you handle not knowing the answer to something?</div><div class="a">"I say I don't know, then go find out" is a genuinely strong answer — confidently faking it is the actual red flag interviewers are listening for.</div></div>
+  <div class="qa-card"><div class="q"><span class="qmark">Q.</span>Why this role, and why now?</div><div class="a">Tie it to something specific and recent — a project you built, a track you're focused on — generic enthusiasm is forgettable.</div></div>
+
+  <div style="margin-top:24px;">
+    <div class="note tilt-l">you're not expected to know everything — you're expected to think out loud clearly</div>
+  </div>
+</section>
+
 <!-- ============ YOU BELONG HERE ============ -->
 <section class="block" id="belong">
   <div class="belong">
@@ -595,7 +818,7 @@
 <!-- ============ CHECKLIST ============ -->
 <section class="block" id="checklist">
   <div class="block-head">
-    <span class="block-tag">Step 4</span>
+    <span class="block-tag">Step 9</span>
     <h2>Your first 30 days</h2>
     <p>One small, concrete step per day. You don't need to do them in exact order or on the exact day — the point is momentum, not a perfect streak.</p>
   </div>
@@ -661,10 +884,29 @@
   document.getElementById('footer-time').textContent =
     'updated ' + new Date().toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' });
 
-  // ---- checklist progress (in-memory only; add localStorage if self-hosting) ----
+  // ---- checklist progress, persisted via localStorage ----
   const boxes = Array.from(document.querySelectorAll('.checklist input[type="checkbox"]'));
   const countEl = document.getElementById('ribbon-count');
   const fillEl = document.getElementById('ribbon-fill');
+  const STORAGE_KEY = 'tech-starter-checklist-v1';
+
+  function loadState(){
+    try{
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      boxes.forEach(box => {
+        if (saved[box.id]) {
+          box.checked = true;
+          box.closest('li').classList.add('done');
+        }
+      });
+    } catch(e) { /* ignore corrupted/missing storage */ }
+  }
+
+  function saveState(){
+    const state = {};
+    boxes.forEach(box => { if (box.checked) state[box.id] = true; });
+    try{ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) { /* storage unavailable */ }
+  }
 
   function updateProgress(){
     const total = boxes.length;
@@ -676,9 +918,12 @@
   boxes.forEach(box => {
     box.addEventListener('change', () => {
       box.closest('li').classList.toggle('done', box.checked);
+      saveState();
       updateProgress();
     });
   });
+
+  loadState();
   updateProgress();
 
   // ---- active nav highlight on scroll ----
