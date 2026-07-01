@@ -211,6 +211,37 @@
   .checklist label .d{ color:var(--ink-dim); font-size:13.5px; }
   .checklist li.done label .t{ color:var(--ink-dim); text-decoration:line-through; text-decoration-color:var(--line); }
 
+  /* portfolio steps */
+  .why-strip{
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+    gap:16px; margin-bottom:44px;
+  }
+  .why-card{
+    background:var(--bg-alt); border:1px solid var(--line); border-radius:14px;
+    padding:20px;
+  }
+  .why-card .num{ font-family:var(--disp); font-weight:700; color:var(--coral); font-size:13px; margin-bottom:8px; display:block;}
+  .why-card h3{ font-family:var(--disp); font-size:15.5px; margin-bottom:6px; }
+  .why-card p{ color:var(--ink-dim); font-size:14px; }
+
+  .steps{ display:flex; flex-direction:column; gap:0; }
+  .step{
+    display:grid; grid-template-columns:56px 1fr; gap:20px;
+    padding:26px 0; border-top:1px solid var(--line);
+  }
+  .step:first-child{ border-top:none; }
+  .step-num{
+    font-family:var(--disp); font-size:22px; font-weight:700;
+    color:var(--violet); background:var(--bg-alt);
+    width:44px; height:44px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line);
+  }
+  .step-body h3{ font-family:var(--disp); font-size:17px; margin-bottom:6px; }
+  .step-body p{ color:var(--ink-dim); font-size:14.5px; margin-bottom:8px; }
+  .step-body a.tool-link{ font-size:13.5px; font-weight:600; color:var(--teal); text-decoration:none; }
+  .step-body a.tool-link:hover{ text-decoration:underline; }
+
   /* belong section */
   .belong{
     background:linear-gradient(135deg, #2C2350, #5B3FA0);
@@ -258,13 +289,14 @@
 <div class="ribbon">
   <span>🌱 <strong>Your first 30 days</strong></span>
   <div class="ribbon-track"><div class="ribbon-fill" id="ribbon-fill"></div></div>
-  <span id="ribbon-count">0/7 done</span>
+  <span id="ribbon-count">0/8 done</span>
 </div>
 
 <nav id="mainnav">
   <a href="#start-here">Start Here</a>
   <a href="#toolkit">Toolkit</a>
   <a href="#guides">Guides</a>
+  <a href="#portfolio">Portfolio</a>
   <a href="#belong">You Belong Here</a>
   <a href="#checklist">30-Day Checklist</a>
 </nav>
@@ -425,6 +457,95 @@
   </div>
 </section>
 
+<!-- ============ PORTFOLIO ============ -->
+<section class="block" id="portfolio">
+  <div class="block-head">
+    <span class="block-tag">Step 5</span>
+    <h2>Build a portfolio — step by step</h2>
+    <p>A resume tells people what you claim you can do. A portfolio shows them. It's often the single biggest lever for a junior profile with limited "real" work experience.</p>
+  </div>
+
+  <div class="why-strip">
+    <div class="why-card">
+      <span class="num">WHY 01</span>
+      <h3>It replaces "trust me"</h3>
+      <p>Anyone can list "Python" on a resume. A working project proves you can actually use it.</p>
+    </div>
+    <div class="why-card">
+      <span class="num">WHY 02</span>
+      <h3>It's your interview cheat sheet</h3>
+      <p>Interviewers love asking about real projects — it turns the interview into a conversation you're prepared for, not a quiz.</p>
+    </div>
+    <div class="why-card">
+      <span class="num">WHY 03</span>
+      <h3>It counts even with zero jobs</h3>
+      <p>Recruiters filtering junior candidates expect thin work history. A portfolio is the thing that's supposed to fill that gap.</p>
+    </div>
+    <div class="why-card">
+      <span class="num">WHY 04</span>
+      <h3>It tracks your own growth</h3>
+      <p>Looking back at project #1 vs. project #5 is genuinely motivating on the hard days.</p>
+    </div>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <h3>Pick a home for it</h3>
+        <p>Don't overthink this. A single GitHub Pages site (like this one!) or a free Notion page both work. What matters is that it's live at one link you can share.</p>
+        <a class="tool-link" href="https://pages.github.com" target="_blank" rel="noopener">pages.github.com ↗</a>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <h3>Choose 3–4 projects that show range</h3>
+        <p>Not your ten biggest projects — your most different ones. One that shows you can build a UI, one that shows logic/backend thinking, one that solves a real problem you personally had.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <h3>Write a short case study for each</h3>
+        <p>For every project, answer three things in a few sentences each: what problem it solved, what tools you used, and one thing you'd do differently now. That last part matters more than people think — it shows judgment, not just output.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <h3>Add a real "About" section</h3>
+        <p>Skip the generic bio. Say what you're learning right now, and what kind of role you're looking for. Specificity is more memorable than "passionate about technology."</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <h3>Make yourself easy to contact</h3>
+        <p>Email, LinkedIn, and GitHub links, visible without scrolling or clicking through. A recruiter who has to hunt for how to reach you often just won't.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <h3>Get one honest review before you share it widely</h3>
+        <p>Send it to one person — a mentor, a peer, a community member — and ask what's confusing. You're too close to your own work to catch everything.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <h3>Treat it as never "finished"</h3>
+        <p>Swap out your oldest, weakest project every time you finish something better. A portfolio is a living snapshot of your current best, not a permanent monument.</p>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top:32px;">
+    <div class="note tilt-l">a portfolio with 3 solid projects beats one with 10 half-finished ones, every time</div>
+  </div>
+</section>
+
 <!-- ============ YOU BELONG HERE ============ -->
 <section class="block" id="belong">
   <div class="belong">
@@ -492,6 +613,10 @@
     <li>
       <input type="checkbox" id="c7">
       <label for="c7"><span class="t">Update your LinkedIn/resume with what you just did</span><span class="d">Even "completed freeCodeCamp's first module" counts — document your progress as you make it.</span></label>
+    </li>
+    <li>
+      <input type="checkbox" id="c8">
+      <label for="c8"><span class="t">Start your portfolio's home page</span><span class="d">You don't need projects on it yet — just get the page live with your About section. See the Portfolio guide above.</span></label>
     </li>
   </ul>
   <div style="margin-top:28px;">
