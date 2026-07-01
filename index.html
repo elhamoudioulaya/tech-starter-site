@@ -211,6 +211,21 @@
   .checklist label .d{ color:var(--ink-dim); font-size:13.5px; }
   .checklist li.done label .t{ color:var(--ink-dim); text-decoration:line-through; text-decoration-color:var(--line); }
 
+  .week-label{
+    font-family:var(--disp); font-size:13px; font-weight:700;
+    color:var(--violet-deep); text-transform:uppercase; letter-spacing:.05em;
+    margin:34px 0 12px;
+  }
+  .week-label:first-child{ margin-top:0; }
+  .week-label .range{ color:var(--ink-dim); font-weight:500; text-transform:none; letter-spacing:0; }
+  .day-badge{
+    font-family:var(--disp); font-size:11px; font-weight:700;
+    color:var(--teal); background:rgba(31,163,152,0.1);
+    border:1px solid rgba(31,163,152,0.25);
+    padding:1px 7px; border-radius:5px; margin-right:8px;
+    display:inline-block;
+  }
+
   /* portfolio steps */
   .why-strip{
     display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -289,7 +304,7 @@
 <div class="ribbon">
   <span>🌱 <strong>Your first 30 days</strong></span>
   <div class="ribbon-track"><div class="ribbon-fill" id="ribbon-fill"></div></div>
-  <span id="ribbon-count">0/8 done</span>
+  <span id="ribbon-count">0/30 done</span>
 </div>
 
 <nav id="mainnav">
@@ -582,47 +597,60 @@
   <div class="block-head">
     <span class="block-tag">Step 4</span>
     <h2>Your first 30 days</h2>
-    <p>Small, concrete steps. Check them off as you go — momentum matters more than speed.</p>
+    <p>One small, concrete step per day. You don't need to do them in exact order or on the exact day — the point is momentum, not a perfect streak.</p>
   </div>
 
+  <div class="week-label">Week 1 <span class="range">— Get oriented</span></div>
   <ul class="checklist">
-    <li>
-      <input type="checkbox" id="c1">
-      <label for="c1"><span class="t">Set up your dev/practice environment</span><span class="d">Install a code editor (VS Code is a safe default) and get comfortable opening a terminal.</span></label>
-    </li>
-    <li>
-      <input type="checkbox" id="c2">
-      <label for="c2"><span class="t">Finish one full tutorial module</span><span class="d">Pick freeCodeCamp or The Odin Project and complete just the first section — don't aim for the whole course yet.</span></label>
-    </li>
-    <li>
-      <input type="checkbox" id="c3">
-      <label for="c3"><span class="t">Join one community</span><span class="d">Women Who Code, a Discord, a subreddit — anywhere you can ask a "dumb" question and get a kind answer.</span></label>
-    </li>
-    <li>
-      <input type="checkbox" id="c4">
-      <label for="c4"><span class="t">Ask one question out loud</span><span class="d">In a forum, a group chat, anywhere. The people who look confident all started by asking questions too.</span></label>
-    </li>
-    <li>
-      <input type="checkbox" id="c5">
-      <label for="c5"><span class="t">Build one tiny thing</span><span class="d">A basic webpage, a script that renames files, anything real — however small.</span></label>
-    </li>
-    <li>
-      <input type="checkbox" id="c6">
-      <label for="c6"><span class="t">Practice 15 terminal commands</span><span class="d">Use Explainshell or OverTheWire's Bandit until the command line feels less like a foreign language.</span></label>
-    </li>
-    <li>
-      <input type="checkbox" id="c7">
-      <label for="c7"><span class="t">Update your LinkedIn/resume with what you just did</span><span class="d">Even "completed freeCodeCamp's first module" counts — document your progress as you make it.</span></label>
-    </li>
-    <li>
-      <input type="checkbox" id="c8">
-      <label for="c8"><span class="t">Start your portfolio's home page</span><span class="d">You don't need projects on it yet — just get the page live with your About section. See the Portfolio guide above.</span></label>
-    </li>
+    <li><input type="checkbox" id="c1"><label for="c1"><span class="t"><span class="day-badge">Day 1</span>Set up your dev environment</span><span class="d">Install a code editor (VS Code is a safe default) and open a terminal for the first time.</span></label></li>
+    <li><input type="checkbox" id="c2"><label for="c2"><span class="t"><span class="day-badge">Day 2</span>Pick your lane</span><span class="d">Support, Dev, Cloud, or Security — revisit the Start Here section if you're unsure.</span></label></li>
+    <li><input type="checkbox" id="c3"><label for="c3"><span class="t"><span class="day-badge">Day 3</span>Create your accounts</span><span class="d">GitHub and LinkedIn, at minimum. These are the two you'll use constantly from here on.</span></label></li>
+    <li><input type="checkbox" id="c4"><label for="c4"><span class="t"><span class="day-badge">Day 4</span>Read through the Guides section</span><span class="d">Just once, without pressure to memorize anything — you're building a map, not cramming for a test.</span></label></li>
+    <li><input type="checkbox" id="c5"><label for="c5"><span class="t"><span class="day-badge">Day 5</span>Watch one tutorial, start to finish</span><span class="d">Pick anything from the Toolkit section and actually finish it — resist switching tutorials halfway through.</span></label></li>
+    <li><input type="checkbox" id="c6"><label for="c6"><span class="t"><span class="day-badge">Day 6</span>Explore your terminal for 15 minutes</span><span class="d">Just <code>ls</code>, <code>cd</code>, and <code>pwd</code> around your own files. Get used to typing instead of clicking.</span></label></li>
+    <li><input type="checkbox" id="c7"><label for="c7"><span class="t"><span class="day-badge">Day 7</span>Write down 3 things that confused you</span><span class="d">Confusion is data. This list becomes exactly what you go learn next.</span></label></li>
   </ul>
+
+  <div class="week-label">Week 2 <span class="range">— Build core skills</span></div>
+  <ul class="checklist">
+    <li><input type="checkbox" id="c8"><label for="c8"><span class="t"><span class="day-badge">Day 8</span>Finish one tutorial module</span><span class="d">freeCodeCamp or The Odin Project — complete just the first section, not the whole course.</span></label></li>
+    <li><input type="checkbox" id="c9"><label for="c9"><span class="t"><span class="day-badge">Day 9</span>Practice 10 terminal commands</span><span class="d">Use Explainshell to understand exactly what each one does before you use it again.</span></label></li>
+    <li><input type="checkbox" id="c10"><label for="c10"><span class="t"><span class="day-badge">Day 10</span>Try 3 OverTheWire Bandit levels</span><span class="d">Small, game-like wins that make the command line feel less intimidating.</span></label></li>
+    <li><input type="checkbox" id="c11"><label for="c11"><span class="t"><span class="day-badge">Day 11</span>Re-read the Networking guide</span><span class="d">Focus on really understanding what DNS and DHCP do — it comes up constantly, everywhere.</span></label></li>
+    <li><input type="checkbox" id="c12"><label for="c12"><span class="t"><span class="day-badge">Day 12</span>Set up a free-tier cloud account</span><span class="d">AWS or Azure — only if the Cloud/SysAdmin track sounded like you. Skip if it doesn't apply.</span></label></li>
+    <li><input type="checkbox" id="c13"><label for="c13"><span class="t"><span class="day-badge">Day 13</span>Try TryHackMe's beginner path</span><span class="d">Only if Security sounded like your lane — otherwise, use today to redo something from earlier that felt shaky.</span></label></li>
+    <li><input type="checkbox" id="c14"><label for="c14"><span class="t"><span class="day-badge">Day 14</span>Ask one question in a community</span><span class="d">Post it publicly, even if it feels basic. Somebody else has the exact same question.</span></label></li>
+  </ul>
+
+  <div class="week-label">Week 3 <span class="range">— Build something real</span></div>
+  <ul class="checklist">
+    <li><input type="checkbox" id="c15"><label for="c15"><span class="t"><span class="day-badge">Day 15</span>Pick one small project idea</span><span class="d">Something you'd actually use yourself — motivation lasts longer on projects that matter to you.</span></label></li>
+    <li><input type="checkbox" id="c16"><label for="c16"><span class="t"><span class="day-badge">Day 16</span>Build a rough first version</span><span class="d">Ugly and working beats polished and imaginary. Don't aim for good yet.</span></label></li>
+    <li><input type="checkbox" id="c17"><label for="c17"><span class="t"><span class="day-badge">Day 17</span>Push it to GitHub for the first time</span><span class="d">Your first real commit. It doesn't need to be impressive to count.</span></label></li>
+    <li><input type="checkbox" id="c18"><label for="c18"><span class="t"><span class="day-badge">Day 18</span>Fix one bug you didn't understand at first</span><span class="d">Debugging is the actual skill — this is where real learning happens.</span></label></li>
+    <li><input type="checkbox" id="c19"><label for="c19"><span class="t"><span class="day-badge">Day 19</span>Add a README</span><span class="d">A few sentences on what it does and why you built it — write it for a stranger.</span></label></li>
+    <li><input type="checkbox" id="c20"><label for="c20"><span class="t"><span class="day-badge">Day 20</span>Share it with one person</span><span class="d">A mentor, a peer, a community member — ask specifically what's confusing about it.</span></label></li>
+    <li><input type="checkbox" id="c21"><label for="c21"><span class="t"><span class="day-badge">Day 21</span>Improve it based on that feedback</span><span class="d">Even one small change based on real feedback is worth more than a week of solo tinkering.</span></label></li>
+  </ul>
+
+  <div class="week-label">Week 4 <span class="range">— Portfolio &amp; community</span></div>
+  <ul class="checklist">
+    <li><input type="checkbox" id="c22"><label for="c22"><span class="t"><span class="day-badge">Day 22</span>Start your portfolio home page</span><span class="d">Get it live with just your name and an About section — see the Portfolio guide above.</span></label></li>
+    <li><input type="checkbox" id="c23"><label for="c23"><span class="t"><span class="day-badge">Day 23</span>Write a case study for your project</span><span class="d">What problem it solved, what tools you used, one thing you'd do differently now.</span></label></li>
+    <li><input type="checkbox" id="c24"><label for="c24"><span class="t"><span class="day-badge">Day 24</span>Write your real About section</span><span class="d">What you're learning right now and what kind of role you're looking for — specific beats generic.</span></label></li>
+    <li><input type="checkbox" id="c25"><label for="c25"><span class="t"><span class="day-badge">Day 25</span>Add contact links</span><span class="d">Email, LinkedIn, GitHub — visible without anyone needing to scroll or click through.</span></label></li>
+    <li><input type="checkbox" id="c26"><label for="c26"><span class="t"><span class="day-badge">Day 26</span>Join one women-in-tech or beginner community</span><span class="d">Women Who Code, Girls Who Code, or Django Girls are great places to start — see You Belong Here.</span></label></li>
+    <li><input type="checkbox" id="c27"><label for="c27"><span class="t"><span class="day-badge">Day 27</span>Update your resume</span><span class="d">Add what you've actually built this month — even "completed freeCodeCamp's first module" counts.</span></label></li>
+    <li><input type="checkbox" id="c28"><label for="c28"><span class="t"><span class="day-badge">Day 28</span>Get one honest review of your portfolio</span><span class="d">Ask specifically what's confusing or missing — you're too close to your own work to catch everything.</span></label></li>
+    <li><input type="checkbox" id="c29"><label for="c29"><span class="t"><span class="day-badge">Day 29</span>Post about your progress somewhere public</span><span class="d">LinkedIn, a community channel, anywhere. Visibility is part of the job search, not separate from it.</span></label></li>
+    <li><input type="checkbox" id="c30"><label for="c30"><span class="t"><span class="day-badge">Day 30</span>Set your next 30-day goal</span><span class="d">Look back at day 1 first — you'll be surprised how much changed. Then pick what's next.</span></label></li>
+  </ul>
+
   <div style="margin-top:28px;">
     <div class="note tilt-r">progress isn't linear — bad days don't erase the good ones ✨</div>
   </div>
 </section>
+
 
 <footer>
   <span>Made for anyone starting their tech journey — glad you're here 💛</span>
